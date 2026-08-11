@@ -2,6 +2,7 @@ import type { HttpClient } from '../http.js';
 import type { JsonApiResponse, Page, PaginationOptions } from '../types/json-api.js';
 import type { AlertHistory, DismissAlertRequest } from '../types/alerts.js';
 import { paginate } from '../pagination.js';
+import { unwrapJsonApiData } from '../json-api-mapper.js';
 
 export class AlertsResource {
   constructor(private getClient: () => Promise<HttpClient>) {}
@@ -37,7 +38,7 @@ export class AlertsResource {
   async getHistory(id: string): Promise<AlertHistory> {
     const client = await this.getClient();
     const response = await client.request<JsonApiResponse<AlertHistory>>(`/alert/history/info/${id}`);
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `alert history for ${id}`);
     return { id: data.id, ...data.attributes } as AlertHistory;
   }
 

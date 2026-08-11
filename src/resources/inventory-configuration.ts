@@ -2,7 +2,7 @@ import type { HttpClient } from '../http.js';
 import type { JsonApiResponse, Page, PaginationOptions } from '../types/json-api.js';
 import type { ConfigurationInfo } from '../types/configuration.js';
 import { paginate } from '../pagination.js';
-import { mapJsonApiResourceArray } from '../json-api-mapper.js';
+import { mapJsonApiResourceArray, unwrapJsonApiData } from '../json-api-mapper.js';
 
 export class InventoryConfigurationResource {
   constructor(private getClient: () => Promise<HttpClient>) {}
@@ -37,7 +37,7 @@ export class InventoryConfigurationResource {
   async get(id: string): Promise<ConfigurationInfo> {
     const client = await this.getClient();
     const response = await client.request<JsonApiResponse<ConfigurationInfo>>(`/inventory/configuration/${id}`);
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `configuration for ${id}`);
     return { id: data.id, ...data.attributes } as ConfigurationInfo;
   }
 }

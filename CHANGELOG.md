@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/wyre-technology/node-auvik/compare/v1.3.0...v1.3.1) (2026-08-11)
+
+
+### Bug Fixes
+
+* **resources:** throw descriptive error when JSON:API data is empty or absent ([#33](https://github.com/wyre-technology/node-auvik/issues/33)) ([62cf835](https://github.com/wyre-technology/node-auvik/commit/62cf83589ec3074a1304dd428fbc04877bc57438)), closes [wyre-technology/halopsa-mcp#76](https://github.com/wyre-technology/halopsa-mcp/issues/76) [wyre-technology/node-halopsa#59](https://github.com/wyre-technology/node-halopsa/issues/59)
+
 # [1.3.0](https://github.com/wyre-technology/node-auvik/compare/v1.2.4...v1.3.0) (2026-06-18)
 
 

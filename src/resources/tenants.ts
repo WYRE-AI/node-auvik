@@ -2,7 +2,7 @@ import type { HttpClient } from '../http.js';
 import type { JsonApiResponse, Page, PaginationOptions } from '../types/json-api.js';
 import type { Tenant, TenantDetail } from '../types/tenants.js';
 import { paginate } from '../pagination.js';
-import { mapJsonApiResourceArray } from '../json-api-mapper.js';
+import { mapJsonApiResourceArray, unwrapJsonApiData } from '../json-api-mapper.js';
 
 export class TenantsResource {
   constructor(private getClient: () => Promise<HttpClient>) {}
@@ -65,7 +65,7 @@ export class TenantsResource {
     // Single-tenant read is /tenants/detail/{id} (there is no /tenants/{id}).
     const client = await this.getClient();
     const response = await client.request<JsonApiResponse<TenantDetail>>(`/tenants/detail/${id}`);
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `tenant for ${id}`);
     return { id: data.id, ...data.attributes } as TenantDetail;
   }
 }

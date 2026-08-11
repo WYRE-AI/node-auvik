@@ -2,6 +2,7 @@ import type { HttpClient } from '../http.js';
 import type { JsonApiResponse, Page, PaginationOptions } from '../types/json-api.js';
 import type { EntityNote, EntityAudit } from '../types/entity.js';
 import { paginate } from '../pagination.js';
+import { unwrapJsonApiData } from '../json-api-mapper.js';
 
 export class InventoryEntityResource {
   constructor(private getClient: () => Promise<HttpClient>) {}
@@ -37,7 +38,7 @@ export class InventoryEntityResource {
   async getNote(id: string): Promise<EntityNote> {
     const client = await this.getClient();
     const response = await client.request<JsonApiResponse<EntityNote>>(`/inventory/entity/note/${id}`);
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `entity note for ${id}`);
     return { id: data.id, ...data.attributes } as any;
   }
 
@@ -72,7 +73,7 @@ export class InventoryEntityResource {
   async getAudit(id: string): Promise<EntityAudit> {
     const client = await this.getClient();
     const response = await client.request<JsonApiResponse<EntityAudit>>(`/inventory/entity/audit/${id}`);
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `entity audit for ${id}`);
     return { id: data.id, ...data.attributes } as any;
   }
 }

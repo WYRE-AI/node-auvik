@@ -2,6 +2,7 @@ import type { HttpClient } from '../http.js';
 import type { JsonApiResponse, Page } from '../types/json-api.js';
 import type { BillingUsageClient, BillingUsageDevice, BillingUsageOptions } from '../types/billing.js';
 import { paginate } from '../pagination.js';
+import { unwrapJsonApiData } from '../json-api-mapper.js';
 
 // Auvik billing usage is filtered by DATE via the JSON:API params
 // filter[fromDate]/filter[thruDate] (YYYY-MM-DD); tenants is a plain scope param.
@@ -52,7 +53,7 @@ export class BillingResource {
       `/billing/usage/device/${id}`,
       { params: usageParams(options) },
     );
-    const data = Array.isArray(response.data) ? response.data[0] : response.data;
+    const data = unwrapJsonApiData(response, `device usage for ${id}`);
     return { id: data.id, ...data.attributes } as BillingUsageDevice;
   }
 }

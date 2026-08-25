@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/WYRE-AI/node-auvik/compare/v1.3.1...v1.3.2) (2026-08-25)
+
+
+### Bug Fixes
+
+* migrate to WYRE-AI org (npm scope, ghcr namespace, registry) ([#37](https://github.com/WYRE-AI/node-auvik/issues/37)) ([9ae7d38](https://github.com/WYRE-AI/node-auvik/commit/9ae7d384931cb822c90d388540312c940a50f5dc))
+
 ## [1.3.1](https://github.com/WYRE-AI/node-auvik/compare/v1.3.0...v1.3.1) (2026-08-11)
 
 

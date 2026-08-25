@@ -1,6 +1,6 @@
 # Contributing
 
-We welcome contributions to @wyre-technology/node-auvik! Please read this guide before submitting pull requests.
+We welcome contributions to @wyre-ai/node-auvik! Please read this guide before submitting pull requests.
 
 ## Development Setup
 

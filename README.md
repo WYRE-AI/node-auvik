@@ -1,17 +1,17 @@
-# @wyre-technology/node-auvik
+# @wyre-ai/node-auvik
 
 Node.js client library for the Auvik network monitoring API.
 
 ## Installation
 
 ```bash
-npm install @wyre-technology/node-auvik
+npm install @wyre-ai/node-auvik
 ```
 
 ## Quick Start
 
 ```typescript
-import { AuvikClient } from '@wyre-technology/node-auvik';
+import { AuvikClient } from '@wyre-ai/node-auvik';
 
 const client = new AuvikClient({
   username: 'your-auvik-email@example.com',

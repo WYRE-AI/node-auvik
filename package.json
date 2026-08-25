@@ -1,5 +1,5 @@
 {
-  "name": "@wyre-technology/node-auvik",
+  "name": "@wyre-ai/node-auvik",
   "version": "1.3.1",
   "description": "Node.js client library for the Auvik network monitoring API",
   "type": "module",
@@ -40,12 +40,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wyre-technology/node-auvik.git"
+    "url": "https://github.com/WYRE-AI/node-auvik.git"
   },
   "bugs": {
-    "url": "https://github.com/wyre-technology/node-auvik/issues"
+    "url": "https://github.com/WYRE-AI/node-auvik/issues"
   },
-  "homepage": "https://github.com/wyre-technology/node-auvik#readme",
+  "homepage": "https://github.com/WYRE-AI/node-auvik#readme",
   "devDependencies": {
     "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/git": "^11.0.1",

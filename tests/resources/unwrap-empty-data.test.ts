@@ -14,7 +14,7 @@ import { TenantsResource } from '../../src/resources/tenants.js';
 // `{ data: [] }` or a body with no `data` at all, every get* method must throw
 // a descriptive AuvikError ("Auvik returned no <entity> for <id>") instead of
 // crashing with "TypeError: Cannot read properties of undefined (reading 'id')".
-// Fleet sweep origin: wyre-technology/halopsa-mcp#76 / node-halopsa#59.
+// Fleet sweep origin: WYRE-AI/halopsa-mcp#76 / node-halopsa#59.
 
 function makeHttp(body: unknown): HttpClient {
   const fetchImpl = vi.fn().mockResolvedValue({

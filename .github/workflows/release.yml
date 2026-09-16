@@ -33,8 +33,10 @@ jobs:
         with:
           name: release-build
           path: |
-            .
-            !.git
+            dist
+            node_modules
+            package.json
+            package-lock.json
           retention-days: 1
 
   release:

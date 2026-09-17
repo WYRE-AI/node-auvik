@@ -20,6 +20,12 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          # No git push happens from this job, so there's no reason for even
+          # a read-scoped credential to sit on disk during npm ci -- same
+          # principle as the release job below, applied to the checkout this
+          # PR's diff itself touches (CodeRabbit, WYRE-AI/node-auvik#41).
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version: 22
@@ -28,15 +34,21 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - name: Archive release payload
+        # upload-artifact zips loose files and does NOT preserve Unix file
+        # permissions across that step (all files come back mode 644,
+        # directories 755 -- see actions/upload-artifact's own README,
+        # "Permission loss" section) -- so node_modules/.bin/semantic-release
+        # would lose its executable bit and `npx semantic-release` would
+        # fail in the release job below. Tar the payload ourselves first;
+        # tar's own format preserves modes, and only the single tarball
+        # (not its contents) goes through the lossy zip step.
+        run: tar -czf release-payload.tar.gz dist node_modules package.json package-lock.json
       - name: Upload build output
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: release-build
-          path: |
-            dist
-            node_modules
-            package.json
-            package-lock.json
+          path: release-payload.tar.gz
           retention-days: 1
 
   release:
@@ -67,10 +79,15 @@ jobs:
           node-version: 22
           registry-url: https://npm.pkg.github.com
           scope: '@wyre-ai'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: release-build
           path: .
+      - name: Extract release payload
+        # Untar restores the exact modes the build job set, including
+        # node_modules/.bin/semantic-release's executable bit -- see the
+        # matching comment on the build job's archive step.
+        run: tar -xzf release-payload.tar.gz
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
